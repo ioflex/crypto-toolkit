@@ -1,0 +1,40 @@
+﻿@{
+    ViewData["Title"] = "Home Page";
+}
+
+    <div class="row">
+        <div clas="col-md-4"></div>
+        <div clas="col-md-4">
+            <div class="card">
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <h3 class="current-crypto-price"></h3>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div clas="col-md-4"></div>
+    </div>
+
+@section Scripts{
+    <script type="text/javascript">
+        $(document).ready(function () {
+              $.ajax('@Url.Action("CurrentCryptoPrice")',
+                {
+                    method: "GET",
+                    success: function (data) {
+                        for (let i = 0; i < data.length; i += 1) {
+                            if (data[i].name === "price_usd") {
+                                $(".current-crypto-price").text(data[i].value);
+                            }
+                        }
+                    },
+                    error: function(data){
+      	                console.log(data);
+                    }
+                });
+        });
+    </script>
+}
