@@ -15,9 +15,6 @@
                     <div class="row">
                         <div class="col text-center">
                             <select class="current-crypto-symbol">
-                                <option value="BTC">BTC</option>
-                                <option value="LTC">LTC</option>
-                                <option value="ETH">ETH</option>
                             </select>
                             <h3 class="current-crypto-price"></h3>
                             <button id="refresh-price" class="btn btn-primary">
@@ -36,18 +33,18 @@
 
         function getCryptoPrice() {
 
-            const symbol = $(".current-crypto-symbol").val();
+            const targetSymbol = $(".current-crypto-symbol").val();
 
             $.ajax('@Url.Action("CurrentCryptoPrice")',
                 {
                     method: "GET",
                     data: {
-                        asset: symbol,
+                        symbol: targetSymbol,
                         fiat: "USD"
                     },
                     success: function (data) {
-                        console.log("get");
-                        $(".current-crypto-price").text(data.price);
+                        console.log(data.result);
+                        $(".current-crypto-price").text(data.result.price);
                     },
                     error: function(data){
                         console.log(data);
@@ -55,10 +52,51 @@
                 });
         }
 
+        function getCurrentListings() {
+
+            let $symbolPicker = $(".current-crypto-symbol");
+
+            $.ajax('@Url.Action("CurrentListings")',
+                {
+                    method: "GET",
+                    data: {
+                        limit: 1000,
+                        start: 1
+                    },
+                    success: function (data) {
+                        if ($symbolPicker.children(".sym-opt").length > 0) {
+                            $symbolPicker.children(".sym-opt").remove();
+                        }
+                        if ($.isArray(data.result)) {
+                            for (let i = 0; i < data.result.length; i += 1) {
+                                const symbol = data.result[i].symbol;
+                                let $opt = $("<option>",
+                                    {
+                                        id: `sym-opt-${i}`,
+                                        "class": "sym-opt",
+                                        value: symbol,
+                                        textContent: `${symbol}`
+                                    }).text(symbol);
+                                $symbolPicker.append($opt);
+                            }
+                        }
+                    },
+                    error: function (data) {
+                        console.log(data.result);
+                    }
+                });
+            return true;
+        }
+
         $(document).ready(function () {
+
+            getCurrentListings();
             getCryptoPrice();
 
             $("#refresh-price").on("click", getCryptoPrice);
+            $(".current-crypto-symbol").change(function () {
+                getCryptoPrice();
+            });
         });
     </script>
 }

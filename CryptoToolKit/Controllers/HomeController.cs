@@ -8,20 +8,29 @@ using CryptoToolKit.Services;
 
 namespace CryptoToolKit.Controllers
 {
-    public class HomeController : Controller
+    public class HomeController : BaseController
     {
-        private readonly CoinMarketCapService _cmcService;
 
         public HomeController(CoinMarketCapService cmcService)
         {
-            this._cmcService = cmcService;
+            this.CoinMarketCapService = cmcService;
+
+            // TODO: Implement user settings ex: default fiat currency.
         }
 
+        /// <summary>
+        /// Returns the Home-Index View.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Index()
         {
             return View();
         }
 
+        /// <summary>
+        /// Returns the Home-About View.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult About()
         {
             ViewData["Message"] = "Your application description page.";
@@ -29,6 +38,10 @@ namespace CryptoToolKit.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Returns the Home-Contact View.
+        /// </summary>
+        /// <returns></returns>
         public IActionResult Contact()
         {
             ViewData["Message"] = "Your contact page.";
@@ -41,30 +54,54 @@ namespace CryptoToolKit.Controllers
             return View();
         }
 
+        /// <summary>
+        /// Returns the Error View.
+        /// </summary>
+        /// <returns></returns>
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
 
+        /// <summary>
+        /// Returns the median price for crypto currency, in specified fiat.
+        /// </summary>
+        /// <param name="asset"></param>
+        /// <param name="fiat"></param>
+        /// <returns></returns>
         [HttpGet]
-        public async Task<JsonResult> CurrentCryptoPrice(string asset, string fiat)
+        public async Task<JsonResult> CurrentCryptoPrice(string symbol, string fiat)
         {
             try
             {
-                var result = await this._cmcService.GetTicker(asset, fiat);
+                var tickerSymbol = await this.CoinMarketCapService.GetTickerAsync(symbol ?? "BTC", fiat);
 
-                //var target = tickerObjects.Where(kv => kv.Key.Trim().ToLower().Equals("price_usd"))
-                //                         .Select(kv => kv.Value)
-                //                         .FirstOrDefault();
-
-                var price = Math.Round(Convert.ToDouble(result), 2);
-                return this.Json(new {price});
+                return OkJson(tickerSymbol);
             }
             catch (Exception e)
             {
                 // TODO: Document Exception
-                return this.Json(new {error = e.Message});
+                return ServerExceptionJson(e);
+            }
+        }
+
+        /// <summary>
+        /// TODO: Controller Action Documentations
+        /// </summary>
+        /// <returns></returns>
+        public async Task<JsonResult> CurrentListings()
+        {
+            try
+            {
+                var listings = await this.CoinMarketCapService.GetListingsAsync();
+
+                return OkJson(listings);
+            }
+            catch (Exception e)
+            {
+                // TODO: Document Exception
+                return ServerExceptionJson(e);
             }
         }
     }
