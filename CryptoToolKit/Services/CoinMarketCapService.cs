@@ -1,12 +1,9 @@
 ﻿using System;
-using System.Collections;
-using System.Collections.Generic;
 using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
 
-using Newtonsoft.Json;
 using Newtonsoft.Json.Linq;
 
 namespace CryptoToolKit.Services
@@ -28,9 +25,10 @@ namespace CryptoToolKit.Services
         public CoinMarketCapService(HttpClient client)
         {
             // *** Coin Market Cap API base url ***
-            client.BaseAddress = new Uri("https://api.coinmarketcap.com/v1/");
+            client.BaseAddress = new Uri("https://pro-api.coinmarketcap.com/v1/");
 
             client.DefaultRequestHeaders.Add("Accept", "application/json");
+            client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "d409d0cd-4277-464b-8542-2fd3ed7bf7e6");
 
             this.Client = client;
         }
@@ -40,30 +38,26 @@ namespace CryptoToolKit.Services
         /// </summary>
         /// <param name="asset"></param>
         /// <returns></returns>
-        public async Task<IEnumerable<object>> GetTicker(string asset)
+        public async Task<double> GetTicker(string symbol, string fiat)
         {
-            var response = await Client.GetAsync($"ticker/{asset}");
+            var response = await Client.GetAsync($"cryptocurrency/quotes/latest?symbol={symbol}");
 
             using (var stream = await response.Content.ReadAsStreamAsync())
             using (var reader = new StreamReader(stream, Encoding.UTF8))
             {
                 var content = await reader.ReadToEndAsync();
 
-                var contentArray = JArray.Parse(content);
+                var contentObj = JObject.Parse(content);
 
-                var ret = new List<object>();
-                foreach (var obj in contentArray.Children<JObject>())
-                {
-                    foreach (var prop in obj.Properties())
-                    {
-                        var name = prop.Name;
-                        var value = prop.Value.ToString();
-                        ret.Add(new { name, value });
-                    }
-                }
+                var price = (double) contentObj["data"][symbol]["quote"][fiat]["price"];
 
-                return ret.ToArray();
+                return price;
             }
         }
+
+        //public async Task<IEnumerable<object>> GetListings()
+        //{
+        //    var response = await Client.GetAsync("")
+        //}
     }
 }

@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using CryptoToolKit.Models;
@@ -47,12 +48,18 @@ namespace CryptoToolKit.Controllers
         }
 
         [HttpGet]
-        public async Task<JsonResult> CurrentCryptoPrice()
+        public async Task<JsonResult> CurrentCryptoPrice(string asset, string fiat)
         {
             try
             {
-                var result = await this._cmcService.GetTicker("bitcoin");
-                return this.Json(result);
+                var result = await this._cmcService.GetTicker(asset, fiat);
+
+                //var target = tickerObjects.Where(kv => kv.Key.Trim().ToLower().Equals("price_usd"))
+                //                         .Select(kv => kv.Value)
+                //                         .FirstOrDefault();
+
+                var price = Math.Round(Convert.ToDouble(result), 2);
+                return this.Json(new {price});
             }
             catch (Exception e)
             {
