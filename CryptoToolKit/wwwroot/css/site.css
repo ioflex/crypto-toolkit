@@ -35,3 +35,112 @@ body {
         display: none;
     }
 }
+
+/*
+** Right sidebar
+*/
+
+.sidebar-right {
+    position: fixed;
+    right: -240px;
+    width: 240px;
+    display: none;
+    z-index: 1100;
+    background: #fff;
+    top: 0px;
+    padding-bottom: 20px;
+    height: 100%;
+    box-shadow: 5px 1px 40px rgba(0, 0, 0, 0.1);
+    -webkit-box-shadow: 5px 1px 40px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    -o-transition: all 0.3s ease;
+    -webkit-transition: all 0.3s ease;
+}
+
+.sidebar-right .sidebar-right-title {
+    display: block;
+    padding: 24px 20px;
+    color: #fff;
+    text-transform: uppercase;
+    font-size: 15px;
+    background: #009efb;
+}
+
+.sidebar-right .sidebar-right-title span {
+    float: right;
+    cursor: pointer;
+    font-size: 11px;
+}
+
+.sidebar-right .sidebar-right-title span:hover {
+    color: #fff;
+}
+
+.sidebar-right .sidebar-right-body {
+    padding: 20px;
+}
+
+.sidebar-right .sidebar-right-body ul {
+    margin: 0px;
+    padding: 0px;
+}
+
+.sidebar-right .sidebar-right-body ul li {
+    list-style: none;
+    padding: 5px 0;
+}
+
+/**
+    Material Forms
+*/
+.form-material .form-group {
+    overflow: hidden; }
+
+.form-material .form-control {
+    background-color: transparent;
+    background-position: center bottom, center calc(100% - 1px);
+    background-repeat: no-repeat;
+    background-size: 0 2px, 100% 1px;
+    padding: 0;
+    -webkit-transition: background 0s ease-out 0s;
+    -o-transition: background 0s ease-out 0s;
+    transition: background 0s ease-out 0s; 
+}
+
+.form-material .form-control, .form-material .form-control.focus, .form-material .form-control:focus {
+    background-image: -webkit-gradient(linear, left top, left bottom, from(#009efb), to(#009efb)), -webkit-gradient(linear, left top, left bottom, from(#d9d9d9), to(#d9d9d9));
+    background-image: -webkit-linear-gradient(#009efb, #009efb), -webkit-linear-gradient(#d9d9d9, #d9d9d9);
+    background-image: -o-linear-gradient(#009efb, #009efb), -o-linear-gradient(#d9d9d9, #d9d9d9);
+    background-image: linear-gradient(#009efb, #009efb), linear-gradient(#d9d9d9, #d9d9d9);
+    border: 0 none;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+    float: none;
+}
+
+.form-material .form-control.focus, .form-material .form-control:focus {
+    background-size: 100% 2px, 100% 1px;
+    outline: 0 none;
+    -webkit-transition-duration: 0.3s;
+    -o-transition-duration: 0.3s;
+    transition-duration: 0.3s; 
+}
+
+.form-control-line .form-group {
+    overflow: hidden; 
+}
+
+.form-control-line .form-control {
+    border: 0px;
+    border-radius: 0px;
+    padding-left: 0px;
+    border-bottom: 1px solid #d9d9d9; 
+}
+
+.form-control-line .form-control:focus {
+    border-bottom: 1px solid #009efb; 
+}
+
+
+.card-body .
