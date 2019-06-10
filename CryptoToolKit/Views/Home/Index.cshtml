@@ -2,6 +2,16 @@
     ViewData["Title"] = "Home Page";
 }
 
+    <style type="text/css">
+        .btn-ddl-container {
+            position: relative;
+            padding: 1rem;
+            margin: 1rem -15px 0;
+            border: solid #f8f9fa; 
+        }
+
+        
+    </style>
     <div class="row">
         <div clas="col"></div>
         <div clas="col">
@@ -54,7 +64,7 @@
 
         function getCurrentListings() {
 
-            let $symbolPicker = $(".current-crypto-symbol");
+            const $symbolPicker = $(".current-crypto-symbol");
 
             $.ajax('@Url.Action("CurrentListings")',
                 {
@@ -70,13 +80,13 @@
                         if ($.isArray(data.result)) {
                             for (let i = 0; i < data.result.length; i += 1) {
                                 const symbol = data.result[i].symbol;
-                                let $opt = $("<option>",
-                                    {
-                                        id: `sym-opt-${i}`,
-                                        "class": "sym-opt",
-                                        value: symbol,
-                                        textContent: `${symbol}`
-                                    }).text(symbol);
+                                const $opt = $("<option>",
+                                                {
+                                                    id: `sym-opt-${i}`,
+                                                    "class": "sym-opt",
+                                                    value: symbol,
+                                                    textContent: `${symbol}`
+                                                }).text(symbol);
                                 $symbolPicker.append($opt);
                             }
                         }
@@ -97,6 +107,23 @@
             $(".current-crypto-symbol").change(function () {
                 getCryptoPrice();
             });
+
+            $.ajax('@Url.Action("ConvertPrice")',
+                {
+                    method: "GET",
+                    data: {
+                        amount: 3.47,
+                        symbol: "BTC",
+                        toSymbols: ["USD"]
+                    },
+                    success: function(response) {
+                        console.log(response.result);
+                    },
+                    error: function(response) {
+                        console.log(response.result);
+                    },
+                    traditional: true
+                });
         });
     </script>
 }

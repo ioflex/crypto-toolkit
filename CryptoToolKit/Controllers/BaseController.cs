@@ -15,12 +15,37 @@ namespace CryptoToolKit.Controllers
         protected CoinMarketCapService CoinMarketCapService = null;
 
         /// <summary>
+        /// TODO: Property Documentation
+        /// </summary>
+        protected NewsApiService NewsApiService = null;
+
+        /// <summary>
         /// TODO: Method Documentation
         /// </summary>
         /// <param name="coinMarketCapService"></param>
-        protected void Initiliaze(CoinMarketCapService coinMarketCapService)
+        protected void Initialize(CoinMarketCapService coinMarketCapService)
         {
             this.CoinMarketCapService = coinMarketCapService;
+        }
+
+        /// <summary>
+        /// TODO: Method Documentation
+        /// </summary>
+        /// <param name="newsApiService"></param>
+        protected void Initialize(NewsApiService newsApiService)
+        {
+            this.NewsApiService = newsApiService;
+        }
+
+        /// <summary>
+        /// TODO: Method Documentation
+        /// </summary>
+        /// <param name="coinMarketCapService"></param>
+        /// <param name="newsApiService"></param>
+        protected void Initialize(CoinMarketCapService coinMarketCapService, NewsApiService newsApiService)
+        {
+            this.CoinMarketCapService = coinMarketCapService;
+            this.NewsApiService = newsApiService;
         }
 
         /// <summary>

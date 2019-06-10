@@ -10,12 +10,15 @@ namespace CryptoToolKit.Controllers
 {
     public class HomeController : BaseController
     {
-
-        public HomeController(CoinMarketCapService cmcService)
-        {
-            this.CoinMarketCapService = cmcService;
-
+        /// <summary>
+        /// CTOR
+        /// </summary>
+        /// <param name="cmcService"></param>
+        /// <param name="naService"></param>
+        public HomeController(CoinMarketCapService cmcService, NewsApiService naService)
+        { 
             // TODO: Implement user settings ex: default fiat currency.
+            this.Initialize(cmcService, naService);
         }
 
         /// <summary>
@@ -62,6 +65,30 @@ namespace CryptoToolKit.Controllers
         public IActionResult Error()
         {
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
+        }
+
+        /// <summary>
+        /// Returns the amount specified by <paramref name="amount"/> of the symbol specified by <paramref name="symbol"/>
+        /// in the specified set of symbols <paramref name="toSymbols"/>
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="symbol"></param>
+        /// <param name="toSymbols"></param>
+        /// <returns></returns>
+        [HttpGet]
+        public async Task<JsonResult> ConvertPrice(double amount, string symbol, string[] toSymbols)
+        {
+            try
+            {
+                var priceConversion = await this.CoinMarketCapService.ConvertPriceAsync(amount, symbol, toSymbols);
+
+                return OkJson(priceConversion);
+            }
+            catch (Exception e)
+            {
+                // TODO: Document Exception
+                return ServerExceptionJson(e);
+            }
         }
 
         /// <summary>
