@@ -24,17 +24,6 @@
                 <div class="card-body">
                     <div class="row">
                         <div class="col text-center">
-                            <div class="btn-group">
-                                <button type="button" class="btn btn-info dropdown-toggle" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                </button>
-                                <div class="dropdown-menu" x-placement="bottom-start" style="position: absolute; will-change: transform; top: 0px; left: 0px; transform: translate3d(0px, 38px, 0px);">
-                                    <a class="dropdown-item" href="#">1m</a>
-                                    <a class="dropdown-item" href="#">2m</a>
-                                    <a class="dropdown-item" href="#">3m</a>
-                                    <a class="dropdown-item" href="#">4m</a>
-                                    <a class="dropdown-item" href="#">5m</a>
-                                </div>
-                            </div>
                             <select class="current-crypto-symbol">
                             </select>
                             <h3 class="current-crypto-price"></h3>
@@ -75,7 +64,7 @@
 
         function getCurrentListings() {
 
-            let $symbolPicker = $(".current-crypto-symbol");
+            const $symbolPicker = $(".current-crypto-symbol");
 
             $.ajax('@Url.Action("CurrentListings")',
                 {
@@ -91,13 +80,13 @@
                         if ($.isArray(data.result)) {
                             for (let i = 0; i < data.result.length; i += 1) {
                                 const symbol = data.result[i].symbol;
-                                let $opt = $("<option>",
-                                    {
-                                        id: `sym-opt-${i}`,
-                                        "class": "sym-opt",
-                                        value: symbol,
-                                        textContent: `${symbol}`
-                                    }).text(symbol);
+                                const $opt = $("<option>",
+                                                {
+                                                    id: `sym-opt-${i}`,
+                                                    "class": "sym-opt",
+                                                    value: symbol,
+                                                    textContent: `${symbol}`
+                                                }).text(symbol);
                                 $symbolPicker.append($opt);
                             }
                         }
@@ -107,7 +96,7 @@
                     }
                 });
             return true;
-        }-
+        }
 
         $(document).ready(function () {
 
@@ -118,6 +107,23 @@
             $(".current-crypto-symbol").change(function () {
                 getCryptoPrice();
             });
+
+            $.ajax('@Url.Action("ConvertPrice")',
+                {
+                    method: "GET",
+                    data: {
+                        amount: 3.47,
+                        symbol: "BTC",
+                        toSymbols: ["USD"]
+                    },
+                    success: function(response) {
+                        console.log(response.result);
+                    },
+                    error: function(response) {
+                        console.log(response.result);
+                    },
+                    traditional: true
+                });
         });
     </script>
 }
