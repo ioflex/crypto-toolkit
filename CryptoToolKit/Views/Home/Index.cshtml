@@ -1,42 +1,51 @@
 ﻿@{
     ViewData["Title"] = "Home Page";
 }
-
-    <style type="text/css">
-        .btn-ddl-container {
-            position: relative;
-            padding: 1rem;
-            margin: 1rem -15px 0;
-            border: solid #f8f9fa; 
-        }
-
-        
-    </style>
-    <div class="row">
-        <div clas="col"></div>
-        <div clas="col">
-            <div class="card">
-                <div class="card-header">
-                    <h3 class="text-info">
-                        Current Market Price
-                    </h3>
-                </div>
-                <div class="card-body">
-                    <div class="row">
-                        <div class="col text-center">
-                            <select class="current-crypto-symbol">
+<div class="row">
+    <div class="col"></div>
+    <div class="col"></div>
+    <div class="col">
+        <button class="sidebar-right-toggle btn-info btn-sm pull-right">
+            <i class="fab fa-newspaper"></i>
+        </button>
+    </div>
+</div>
+<div class="row">
+    <div clas="col">
+    </div>
+    <div clas="col">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-corner bg-primary text-white ml-0 mt-0">Market info</h4>
+                <div class="row">
+                    <div class="col text-center">
+                        <form class="form-material">
+                            <select class="form-control current-crypto-symbol">
                             </select>
                             <h3 class="current-crypto-price"></h3>
                             <button id="refresh-price" class="btn btn-primary">
                                 Refresh
                             </button>
-                        </div>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
-        <div clas="col"></div>
     </div>
+    <div clas="col">
+    </div>
+</div>
+
+<div class="sidebar-right">
+    <div class="slimscroll-right">
+        <div class="sidebar-right-title">
+            News Feed
+        </div>
+        <div class="sidebar-right-body">
+            
+        </div>
+    </div>
+</div>
 
 @section Scripts{
     <script type="text/javascript">
@@ -108,7 +117,14 @@
                 getCryptoPrice();
             });
 
-            $.ajax('@Url.Action("ConvertPrice")',
+            $(".slimscroll-right").slimScroll({
+                height: '100%',
+                position: 'right',
+                size: '5px',
+                color: '#dcdcdc'
+            });
+
+            @*$.ajax('@Url.Action("ConvertPrice")',
                 {
                     method: "GET",
                     data: {
@@ -123,7 +139,7 @@
                         console.log(response.result);
                     },
                     traditional: true
-                });
+                });*@
         });
     </script>
 }
