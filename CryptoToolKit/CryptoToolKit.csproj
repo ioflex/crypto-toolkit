@@ -16,10 +16,8 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Areas\Dashboard\Controllers\" />
     <Folder Include="Areas\Dashboard\Data\" />
     <Folder Include="Areas\Dashboard\Models\" />
-    <Folder Include="Areas\Dashboard\Views\" />
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Models\Coinbase\" />
   </ItemGroup>

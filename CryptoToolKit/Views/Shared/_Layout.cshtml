@@ -4,10 +4,11 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>@ViewData["Title"] - Crypto-KIT</title>
-    <script src="https://kit.fontawesome.com/386a2f1f5a.js"></script>
+    
     <environment include="Development">
         <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.css" />
         <link rel="stylesheet" href="~/css/site.css" />
+        <link rel="stylesheet" href="~/lib/font-awesome/css/all.css"/>
     </environment>
     <environment exclude="Development">
         <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
@@ -37,6 +38,9 @@
                 <li class="nav-item">
                     <a asp-area="" asp-controller="Home" asp-action="Contact" class="nav-link">Contact</a>
                 </li>
+                <li class="nav-item">
+                    <a asp-area="Dashboard" asp-controller="Main" asp-action="Main" class="nav-link">Dashboard</a>
+                </li>
             </ul>
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item">
@@ -60,6 +64,7 @@
     <environment include="Development">
         <script src="~/lib/jquery/dist/jquery.js"></script>
         <script src="~/lib/bootstrap/dist/js/bootstrap.js"></script>
+        <script defer src="~/lib/font-awesome/js/all.js"></script>
         <script src="~/js/site.js" asp-append-version="true"></script>
     </environment>
     <environment exclude="Development">
@@ -69,8 +74,8 @@
                 crossorigin="anonymous"
                 integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT">
         </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js" 
-                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" 
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+                integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
                 crossorigin="anonymous">
         </script>
         <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
@@ -79,6 +84,7 @@
                 integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
                 crossorigin="anonymous">
         </script>
+        <script src="https://kit.fontawesome.com/386a2f1f5a.js"></script>
         <script src="~/js/site.min.js" asp-append-version="true"></script>
     </environment>
 
