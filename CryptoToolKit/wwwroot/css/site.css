@@ -90,6 +90,12 @@ body {
     padding: 5px 0;
 }
 
+.show-right {
+    right: 0px;
+    width: 240px;
+    display: block;
+}
+
 /**
     Material Forms
 */
@@ -141,6 +147,3 @@ body {
 .form-control-line .form-control:focus {
     border-bottom: 1px solid #009efb; 
 }
-
-
-.card-body .
