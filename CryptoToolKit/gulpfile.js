@@ -1,4 +1,4 @@
-/// <binding BeforeBuild='clean, default' />
+/// <binding BeforeBuild='build' />
 /*
 This file is the main entry point for defining Gulp tasks and using Gulp plugins.
 Click here to learn more. https://go.microsoft.com/fwlink/?LinkId=518007
@@ -45,26 +45,26 @@ const dependencies = {
 };
 
 // *** Clean the 3rd party code directory ***
-gulp.task("clean", function (cb) {
+function clean(cb) {
     return rimraf("wwwroot/vendor/", cb);
-});
+}
 
 // *** Minify the sites custom javascript ***
 // *** Move it to the lib/site directory ***
-gulp.task("minify", function () {
-    let streams = [
+function minify() {
+    const streams = [
         gulp.src(["wwwroot/js/*.js"])
-            .pipe(uglify())
-            .pipe(concat("site.min.js"))
-            .pipe(gulp.dest("wwwroot/lib/site"))
+        .pipe(uglify())
+        .pipe(concat("site.min.js"))
+        .pipe(gulp.dest("wwwroot/lib/site"))
     ];
 
     return merge(streams);
-});
+}
 
-// *** Build the script dependencies ***
-gulp.task("scripts", function () {
-    let streams = [];
+//// *** Build the 3rd party / npm dependencies ***
+function scripts() {
+    const streams = [];
     for (let dependency in dependencies) {
         console.log(`Processing scripts for: ${dependency}`);
         for (let directory in dependencies[dependency]) {
@@ -73,6 +73,11 @@ gulp.task("scripts", function () {
         }
     }
     return merge(streams);
-});
+}
 
-gulp.task("default", ['clean', 'minify', 'scripts']);
+const build = gulp.series(clean, gulp.parallel(minify, scripts));
+
+exports.clean = clean;
+exports.minify = minify;
+exports.scripts = scripts;
+exports.build = build;

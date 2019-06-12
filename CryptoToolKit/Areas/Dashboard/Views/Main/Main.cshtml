@@ -97,7 +97,7 @@
                                 reject(new Error("Failed to get listings from server"));
                             }
                         });
-        });
+            });
 
         $(document).ready(function() {
 
@@ -144,6 +144,21 @@
                     },
                     traditional: true
                 });*@
+
+            $.ajax('@Url.Action("NewsFeed")',
+                {
+                    method: "GET",
+                    data: {
+                        category: "general",
+                        keyword: "bitcoin"
+                    },
+                    success: function(response) {
+                        console.log(response.result);
+                    },
+                    error: function(response) {
+                        console.log(response.result);
+                    }
+                });
         });
     </script>
 }

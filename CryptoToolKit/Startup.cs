@@ -18,9 +18,12 @@ namespace CryptoToolKit
 {
     public class Startup
     {
-        public Startup(IConfiguration configuration)
+        private readonly IHostingEnvironment _currentEnvironment;
+
+        public Startup(IConfiguration configuration, IHostingEnvironment environment)
         {
             Configuration = configuration;
+            this._currentEnvironment = environment;
         }
 
         public IConfiguration Configuration { get; }
@@ -44,7 +47,25 @@ namespace CryptoToolKit
             services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_2_1);
 
             // *** Added to support IHttpClientFactory ***
-            services.AddHttpClient<CoinMarketCapService>();
+            if (this._currentEnvironment.IsDevelopment())
+            {
+                services.AddHttpClient<CoinMarketCapService>(client =>
+                {
+                    client.BaseAddress = new Uri("https://sandbox-api.coinmarketcap.com/v1/");
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                    client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "f46d7468-60a6-478c-80e8-19c505c945e6");
+                });
+            }
+            else
+            {
+                services.AddHttpClient<CoinMarketCapService>(client =>
+                {
+                    client.BaseAddress = new Uri("https://pro-api.coinmarketcap.com/v1/");
+                    client.DefaultRequestHeaders.Add("Accept", "application/json");
+                    client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "d409d0cd-4277-464b-8542-2fd3ed7bf7e6");
+                });
+            }
+            
             services.AddHttpClient<NewsApiService>();
         }
 
