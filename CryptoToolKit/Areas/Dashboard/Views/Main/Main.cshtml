@@ -1,0 +1,145 @@
+﻿@{
+    ViewData["Title"] = "Main";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="row">
+    <div class="col">
+        @await Html.PartialAsync("~/Areas/Dashboard/Views/_QuickToolbar.cshtml")
+    </div>
+</div>
+<div class="row">
+    <div class="col">
+        @await Html.PartialAsync("~/Areas/Dashboard/Views/_MarketInformationCard.cshtml")
+    </div>
+    <div class="col"></div>
+    <div class="col"></div>
+</div>
+
+@await Html.PartialAsync("~/Areas/Dashboard/Views/_NewsSidebar.cshtml")
+
+@section Scripts{
+    <script type="text/javascript">
+
+        let $symbolPicker = $(".current-crypto-symbol");
+        let $fiatPicker = $(".current-fiat-symbol");
+        let $cryptoPrice = $(".current-crypto-price");
+
+        function getCryptoPrice() {
+
+            $.ajax('@Url.Action("MarketInformation")',
+                {
+                    method: "GET",
+                    data: {
+                        symbol: $symbolPicker.val(),
+                        fiat: "USD"
+                    },
+                    success: function(data) {
+                        $cryptoPrice.text(data.result.price);
+                    },
+                    error: function(data) {
+                        console.log(data);
+                    }
+                });
+        }
+
+        let getListings = new Promise(function(resolve, reject) {
+            $.ajax('@Url.Action("CurrentListings")',
+                {
+                    method: "GET",
+                    data: {
+                        limit: 1000,
+                        start: 1
+                    },
+                    success: function(data) {
+                        if ($symbolPicker.children(".sym-opt").length > 0) {
+                            $symbolPicker.children(".sym-opt").remove();
+                            $symbolPicker.chosen("destroy");
+                            if ($.isArray(data.result)) {
+                                for (let i = 0; i < data.result.length; i += 1) {
+                                    const symbol = data.result[i].symbol;
+                                    const $opt = $("<option>",
+                                        {
+                                            id: `sym-opt-${i}`,
+                                            "class": "sym-opt",
+                                            value: symbol,
+                                            textContent: `${symbol}`
+                                        }).text(symbol);
+                                    $symbolPicker.append($opt);
+                                }
+                            }
+                            resolve("refreshed");
+                        } else {
+                            if ($.isArray(data.result)) {
+                                for (let i = 0; i < data.result.length; i += 1) {
+                                    const symbol = data.result[i].symbol;
+                                    const $opt = $("<option>",
+                                        {
+                                            id: `sym-opt-${i}`,
+                                            "class": "sym-opt",
+                                            value: symbol,
+                                            textContent: `${symbol}`
+                                        }).text(symbol);
+                                    $symbolPicker.append($opt);
+                                }
+                            }
+                        }
+                        $symbolPicker.chosen();
+                        resolve("loaded");
+                    },
+                    error: function(data) {
+                        console.log(data.result);
+                        reject(new Error("Failed to get listings from server"));
+                    }
+                });
+        });
+
+        $(document).ready(function() {
+
+            getListings
+                .then(function(fulfilled) {
+                    console.log(fulfilled);
+                    getCryptoPrice();
+                }).catch(function(error) {
+                    console.log(error.message);
+                });
+
+            $("#refresh-price").on("click", getCryptoPrice);
+
+            $(".current-crypto-symbol").change(function() {
+                getCryptoPrice();
+            });
+
+            $(".sidebar-right-toggle").click(function() {
+                $(".sidebar-right").slideDown(50);
+                $(".sidebar-right").toggleClass("show-right");
+                console.log("sidebar");
+            });
+
+            $(".slimscroll-right").slimScroll({
+                height: '100%',
+                position: 'right',
+                size: '5px',
+                color: '#dcdcdc'
+            });
+
+            @*$.ajax('@Url.Action("ConvertPrice")',
+                {
+                    method: "GET",
+                    data: {
+                        amount: 3.47,
+                        symbol: "BTC",
+                        toSymbols: ["USD"]
+                    },
+                    success: function(response) {
+                        console.log(response.result);
+                    },
+                    error: function(response) {
+                        console.log(response.result);
+                    },
+                    traditional: true
+                });*@
+        });
+    </script>
+}
+
