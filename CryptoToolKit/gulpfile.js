@@ -35,6 +35,10 @@ const dependencies = {
     "jquery-validation-unobtrusive": {
         "dist/*": "jquery-validation-unobtrusive/dist"
     },
+    "moment": {
+        "locale/*": "moment/locale",
+        "min/*": "moment/min"
+    },
     "popper.js": {
         "dist/**/*": "popper.js/dist"
     }

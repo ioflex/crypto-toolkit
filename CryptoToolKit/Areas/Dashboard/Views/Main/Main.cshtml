@@ -24,6 +24,8 @@
         let $symbolPicker = $(".current-crypto-symbol");
         let $fiatPicker = $(".current-fiat-symbol");
         let $cryptoPrice = $(".current-crypto-price");
+        let $dayChange = $(".current-24hr-change");
+        let $lastUpdated = $(".last-updated");
 
         function getCryptoPrice() {
 
@@ -36,6 +38,8 @@
                     },
                     success: function(data) {
                         $cryptoPrice.text(data.result.price);
+                        $dayChange.text(data.result.dayPercentChange);
+                        $lastUpdated.text(moment(data.result.lastUpdated).toString());
                     },
                     error: function(data) {
                         console.log(data);
@@ -43,55 +47,56 @@
                 });
         }
 
-        let getListings = new Promise(function(resolve, reject) {
-            $.ajax('@Url.Action("CurrentListings")',
-                {
-                    method: "GET",
-                    data: {
-                        limit: 1000,
-                        start: 1
-                    },
-                    success: function(data) {
-                        if ($symbolPicker.children(".sym-opt").length > 0) {
-                            $symbolPicker.children(".sym-opt").remove();
-                            $symbolPicker.chosen("destroy");
-                            if ($.isArray(data.result)) {
-                                for (let i = 0; i < data.result.length; i += 1) {
-                                    const symbol = data.result[i].symbol;
-                                    const $opt = $("<option>",
-                                        {
-                                            id: `sym-opt-${i}`,
-                                            "class": "sym-opt",
-                                            value: symbol,
-                                            textContent: `${symbol}`
-                                        }).text(symbol);
-                                    $symbolPicker.append($opt);
+        let getListings = new Promise(
+            function (resolve, reject) {
+                    $.ajax('@Url.Action("CurrentListings")',
+                        {
+                            method: "GET",
+                            data: {
+                                limit: 1000,
+                                start: 1
+                            },
+                            success: function(data) {
+                                if ($symbolPicker.children(".sym-opt").length > 0) {
+                                    $symbolPicker.children(".sym-opt").remove();
+                                    $symbolPicker.chosen("destroy");
+                                    if ($.isArray(data.result)) {
+                                        for (let i = 0; i < data.result.length; i += 1) {
+                                            const symbol = data.result[i].symbol;
+                                            const $opt = $("<option>",
+                                                {
+                                                    id: `sym-opt-${i}`,
+                                                    "class": "sym-opt",
+                                                    value: symbol,
+                                                    textContent: `${symbol}`
+                                                }).text(symbol);
+                                            $symbolPicker.append($opt);
+                                        }
+                                    }
+                                    resolve("refreshed");
+                                } else {
+                                    if ($.isArray(data.result)) {
+                                        for (let i = 0; i < data.result.length; i += 1) {
+                                            const symbol = data.result[i].symbol;
+                                            const $opt = $("<option>",
+                                                {
+                                                    id: `sym-opt-${i}`,
+                                                    "class": "sym-opt",
+                                                    value: symbol,
+                                                    textContent: `${symbol}`
+                                                }).text(symbol);
+                                            $symbolPicker.append($opt);
+                                        }
+                                    }
                                 }
+                                $symbolPicker.chosen();
+                                resolve("loaded");
+                            },
+                            error: function(data) {
+                                console.log(data.result);
+                                reject(new Error("Failed to get listings from server"));
                             }
-                            resolve("refreshed");
-                        } else {
-                            if ($.isArray(data.result)) {
-                                for (let i = 0; i < data.result.length; i += 1) {
-                                    const symbol = data.result[i].symbol;
-                                    const $opt = $("<option>",
-                                        {
-                                            id: `sym-opt-${i}`,
-                                            "class": "sym-opt",
-                                            value: symbol,
-                                            textContent: `${symbol}`
-                                        }).text(symbol);
-                                    $symbolPicker.append($opt);
-                                }
-                            }
-                        }
-                        $symbolPicker.chosen();
-                        resolve("loaded");
-                    },
-                    error: function(data) {
-                        console.log(data.result);
-                        reject(new Error("Failed to get listings from server"));
-                    }
-                });
+                        });
         });
 
         $(document).ready(function() {
