@@ -1,0 +1,35 @@
+{
+  "name": "ioflex-cryptokit",
+  "version": "1.0.0",
+  "description": "A .net core web app containing tools for data analysis on crypto markets.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "crypto",
+    "crypto-currency",
+    "market",
+    "information",
+    "toolkit",
+    "tool",
+    "tools"
+  ],
+  "author": "Dalton Brady",
+  "license": "MIT",
+  "dependencies": {
+    "@fortawesome/fontawesome-free": "^5.9.0",
+    "bootstrap": "^4.3.1",
+    "chosen-js": "^1.8.7",
+    "gulp": "^3.9.1",
+    "gulp-concat": "^2.6.1",
+    "gulp-uglify": "^3.0.2",
+    "jquery": "^3.4.1",
+    "jquery-slimscroll": "^1.3.8",
+    "jquery-validation": "^1.19.0",
+    "jquery-validation-unobtrusive": "^3.2.11",
+    "merge-stream": "^2.0.0",
+    "popper.js": "^1.15.0",
+    "rimraf": "^2.6.3"
+  }
+}
