@@ -6,6 +6,21 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="wwwroot\vendor\bootstrap\**" />
+    <Compile Remove="wwwroot\vendor\jquery\**" />
+    <Compile Remove="wwwroot\vendor\popper.js\**" />
+    <Content Remove="wwwroot\vendor\bootstrap\**" />
+    <Content Remove="wwwroot\vendor\jquery\**" />
+    <Content Remove="wwwroot\vendor\popper.js\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\bootstrap\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\jquery\**" />
+    <EmbeddedResource Remove="wwwroot\vendor\popper.js\**" />
+    <None Remove="wwwroot\vendor\bootstrap\**" />
+    <None Remove="wwwroot\vendor\jquery\**" />
+    <None Remove="wwwroot\vendor\popper.js\**" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Remove="gulpfile.js" />
   </ItemGroup>
 
@@ -29,9 +44,7 @@
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Models\Coinbase\" />
     <Folder Include="wwwroot\lib\" />
-    <Folder Include="wwwroot\vendor\bootstrap\dist\css\" />
-    <Folder Include="wwwroot\vendor\bootstrap\dist\js\" />
-    <Folder Include="wwwroot\vendor\jquery\dist\" />
+    <Folder Include="wwwroot\vendor\" />
   </ItemGroup>
 
 </Project>

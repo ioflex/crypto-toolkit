@@ -147,3 +147,12 @@ body {
 .form-control-line .form-control:focus {
     border-bottom: 1px solid #009efb; 
 }
+
+.card-body {
+    padding: 0 20px 20px 20px;
+}
+
+    .card-body h4 {
+        padding: 10px;
+        border-radius: 0 0 5px 5px;
+    }
