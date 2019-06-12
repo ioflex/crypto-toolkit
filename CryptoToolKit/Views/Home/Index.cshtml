@@ -24,19 +24,26 @@
                     </div>
                 </div>
                 <div class="row text-center">
-                    <div class="col text-left">
+                    <div class="col-sm-4 text-left">
                         <form class="form-material">
                             <h3 class="current-crypto-price"></h3>
                         </form>
                     </div>
-                    <div class="col text-center">
+                    <div class="col-sm-4 text-center">
                         <form class="form-material">
                             <h3>Indicator</h3>
                         </form>
                     </div>
-                    <div class="col text-right">
+                    <div class="col-sm-4 text-right">
                         <form class="form-material">
                             <h3 class="current-24hr-change"></h3>
+                        </form>
+                    </div>
+                </div>
+                <div class="row pt-1">
+                    <div class="col text-center">
+                        <form class="form-material">
+                            <h5 class="last-updated"></h5>
                         </form>
                     </div>
                 </div>
@@ -45,13 +52,6 @@
                         <button id="refresh-price" class="btn btn-primary">
                             Refresh
                         </button>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col text-center">
-                        <form class="form-material">
-                            <h3 class="last-updated"></h3>
-                        </form>
                     </div>
                 </div>
             </div>
@@ -90,6 +90,7 @@
                         console.log(data.result);
                         $(".current-crypto-price").text(data.result.price);
                         $(".current-24hr-change").text(data.result.dayPercentChange);
+                        $(".last-updated").text(data.result.lastUpdated);
                     },
                     error: function(data){
                         console.log(data);
