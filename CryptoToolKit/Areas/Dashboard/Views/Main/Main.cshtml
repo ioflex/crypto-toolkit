@@ -3,8 +3,6 @@
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
-<link rel="stylesheet" href="~/lib/jquery-chosen/css/chosen.css" />
-
 <div class="row">
     <div class="col">
         @await Html.PartialAsync("~/Areas/Dashboard/Views/_QuickToolbar.cshtml")
@@ -21,8 +19,6 @@
 @await Html.PartialAsync("~/Areas/Dashboard/Views/_NewsSidebar.cshtml")
 
 @section Scripts{
-    <script type="text/javascript" src="~/lib/jquery-slimscroll/jquery.slimscroll.js"></script>
-    <script type="text/javascript" src="~/lib/jquery-chosen/js/chosen.jquery.js"></script>
     <script type="text/javascript">
 
         let $symbolPicker = $(".current-crypto-symbol");

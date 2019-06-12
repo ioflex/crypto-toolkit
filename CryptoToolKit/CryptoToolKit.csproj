@@ -29,7 +29,9 @@
     <Folder Include="Areas\Identity\Services\" />
     <Folder Include="Models\Coinbase\" />
     <Folder Include="wwwroot\lib\" />
-    <Folder Include="wwwroot\vendor\" />
+    <Folder Include="wwwroot\vendor\bootstrap\dist\css\" />
+    <Folder Include="wwwroot\vendor\bootstrap\dist\js\" />
+    <Folder Include="wwwroot\vendor\jquery\dist\" />
   </ItemGroup>
 
 </Project>
