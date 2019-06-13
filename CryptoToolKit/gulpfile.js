@@ -5,10 +5,11 @@ Click here to learn more. https://go.microsoft.com/fwlink/?LinkId=518007
 */
 
 const gulp = require("gulp"),
-    uglify = require("gulp-uglify"),
-    concat = require("gulp-concat"),
-    rimraf = require("rimraf"),
-    merge = require("merge-stream");
+      uglify = require("gulp-uglify"),
+      concat = require("gulp-concat"),
+      rimraf = require("rimraf"),
+      merge = require("merge-stream"),
+      async = require("async");
 
 // *** Dependency directories ***
 const dependencies = {
