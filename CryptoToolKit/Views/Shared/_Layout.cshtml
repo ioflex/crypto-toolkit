@@ -23,7 +23,7 @@
     </environment>
 </head>
 <body>
-    <nav class="navbar navbar-inverse fixed-top navbar-expand-sm bg-dark navbar-dark mb-5">
+    <nav class="navbar navbar-inverse fixed-top navbar-expand-lg bg-dark navbar-dark mb-5">
         <a asp-area="" asp-controller="Home" asp-action="Index" class="navbar-brand">Crypto-KIT</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -44,11 +44,26 @@
                 </li>
             </ul>
             <ul class="navbar-nav ml-auto">
+                <div class="btn-group btn-group-toggle mr-2" data-toggle="buttons">
+                    <button type="button" class="btn btn-primary active"> <input type="radio" autocomplete="off">USD</button>
+                    <button type="button" class="btn btn-primary"> <input type="radio" autocomplete="off">EUR</button>
+                    <button type="button" class="btn btn-primary"> <input type="radio" autocomplete="off">CAD</button>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-primary dropdown-toggle" data-toggle="dropdown">More Options</button>
+                        <div class="dropdown-menu btn-group-toggle">
+                            <a href="#" class="dropdown-item btn btn-primary"> <input type="radio" autocomplete="off">GBP</a>
+                            <a href="#" class="dropdown-item btn btn-primary"> <input type="radio" autocomplete="off">AUD</a>
+                            <a href="#" class="dropdown-item btn btn-primary"> <input type="radio" autocomplete="off">JPY</a>
+                            <a href="#" class="dropdown-item btn btn-primary"> <input type="radio" autocomplete="off">NZD</a>
+
+                        </div>
+                    </div>
+                </div>
                 <li class="nav-item">
-                    <partial name="_LoginPartial" />
+                    <partial name="_LoginPartial"/>
                 </li>
                 <li>
-                    <partial name="_CookieConsentPartial" />
+                    <partial name="_CookieConsentPartial"/>
                 </li>
             </ul>
         </div>

@@ -39,7 +39,7 @@
                     success: function(data) {
                         $cryptoPrice.text(data.result.price);
                         $dayChange.text(data.result.dayPercentChange);
-                        $lastUpdated.text(moment(data.result.lastUpdated).toString());
+                        $lastUpdated.text(moment(data.result.lastUpdated).format("ddd, MMM do YYYY, h:mm:ss A"));
                     },
                     error: function(data) {
                         console.log(data);
