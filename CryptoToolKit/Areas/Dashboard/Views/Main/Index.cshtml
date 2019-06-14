@@ -1,5 +1,5 @@
 ﻿@{
-    ViewData["Title"] = "Main";
+    ViewData["Title"] = "Home - Dashboard";
     Layout = "~/Views/Shared/_Layout.cshtml";
 }
 
@@ -34,21 +34,21 @@
                     "class": "list-group-item"
                 });
 
-            const $pos = $("<span/>", { "class": "badge badge-pill bg-success float-right" }).text(article.positive)
+            $("<span/>", { "class": "badge badge-pill bg-success float-right" }).text(article.positive)
                                                                                              .appendTo($li);
 
-            const $neg = $("<span/>", { "class": "badge badge-pill bg-danger float-right" }).text(article.negative)
+            $("<span/>", { "class": "badge badge-pill bg-danger float-right" }).text(article.negative)
                                                                                             .appendTo($li);
 
-            const $neutral = $("<span/>", { "class": "badge badge-pill bg-warning float-right" }).text(article.neutral)
+            $("<span/>", { "class": "badge badge-pill bg-warning float-right" }).text(article.neutral)
                                                                                                  .appendTo($li);
 
-            const $compound = $("<span/>", { "class": "badge badge-pill bg-info float-right" }).text(article.compound)
+            $("<span/>", { "class": "badge badge-pill bg-info float-right" }).text(article.compound)
                                                                                                .appendTo($li);
 
-            const $title = $("<a/>", { href: article.url }).appendTo($li);
+            $("<a/>", { href: article.url }).appendTo($li);
 
-            const $published = $("<p/>").text(article.published).appendTo($li);
+            $("<p/>").text(article.published).appendTo($li);
 
             return $li;
         }
@@ -71,6 +71,44 @@
                         console.log(data);
                     }
                 });
+        }
+
+        const getMarketInfo = function(symbol, fiat) {
+            return new Promise(function (resolve, reject) {
+                $.ajax('@Url.Action("MarketInformation")',
+                    {
+                        method: "GET",
+                        data: {
+                            symbol: symbol,
+                            fiat: fiat
+                        },
+                        success: function (data) {
+                            resolve(data.result);
+                        },
+                        error: function (data) {
+                            reject(data.result);
+                        }
+                    });
+            });
+        }
+
+        const getMarketListings = function () {
+            return new Promise(function (resolve, reject) {
+                $.ajax('@Url.Action("MarketListings")',
+                    {
+                        method: "GET",
+                        data: {
+                            limit: 1000,
+                            start: 1
+                        },
+                        success: function (data) {
+                            resolve(data.result);
+                        },
+                        error: function (data) {
+                            reject(data.result);
+                        }
+                    });
+            });
         }
 
         let getListings = new Promise(
@@ -148,10 +186,10 @@
         $(document).ready(function() {
 
             getListings
-                .then(function(fulfilled) {
-                    console.log(fulfilled);
-                    getCryptoPrice();
-                }).catch(function(error) {
+                .then(getMarketInfo($symbolPicker.val(), "USD"))
+                .then(result => updateMarketInfo(result))
+                .then(stopLoading)
+                .catch(function (error) {
                     console.log(error.message);
                 });
 

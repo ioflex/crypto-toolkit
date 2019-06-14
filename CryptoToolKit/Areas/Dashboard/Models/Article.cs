@@ -24,6 +24,7 @@ namespace CryptoToolKit.Areas.Dashboard.Models
             this.Content = Sanitize(content);
             Analyze();
         }
+
         public string Source { get; set; }
 
         public string Author { get; set; }
@@ -40,19 +41,19 @@ namespace CryptoToolKit.Areas.Dashboard.Models
 
         private double _positive;
 
-        public double Positive => Math.Round(Math.Abs(this._positive), 2);
+        public double Positive => Math.Round(Math.Abs(this._positive), 3);
 
         private double _negative;
 
-        public double Negative => Math.Round(Math.Abs(this._negative), 2);
+        public double Negative => Math.Round(Math.Abs(this._negative), 3);
 
         private double _neutral;
 
-        public double Neutral => Math.Round(Math.Abs(this._neutral), 2);
+        public double Neutral => Math.Round(Math.Abs(this._neutral), 3);
 
         private double _compound;
 
-        public double Compound => Math.Round(Math.Abs(this._compound), 2);
+        public double Compound => Math.Round(Math.Abs(this._compound), 3);
 
         private void Analyze()
         {

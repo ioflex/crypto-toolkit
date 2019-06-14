@@ -25,7 +25,7 @@ namespace CryptoToolKit.Areas.Dashboard.Controllers
         /// Returns the Main.cshtml view
         /// </summary>
         /// <returns></returns>
-        public IActionResult Main()
+        public IActionResult Index()
         {
             return View();
         }

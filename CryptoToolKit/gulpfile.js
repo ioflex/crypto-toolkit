@@ -30,6 +30,10 @@ const dependencies = {
     "jquery-slimscroll": {
         "jquery.slimscroll.min.js": "jquery-slimscroll"
     },
+    "jquery-ui": {
+        "ui/**/*": "jquery-ui/ui",
+        "themes/base/**/*": "jquery-ui/themes/base"
+    },
     "jquery-validation": {
         "dist/**/*": "jquery-validation/dist"
     },
