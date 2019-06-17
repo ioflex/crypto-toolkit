@@ -1,88 +1,58 @@
-/// <binding BeforeBuild='build' />
-/*
-This file is the main entry point for defining Gulp tasks and using Gulp plugins.
-Click here to learn more. https://go.microsoft.com/fwlink/?LinkId=518007
-*/
+// Require the modules.
+var gulp             = require('gulp');
+var gutil            = require('gulp-util');
+var gulpSequence     = require('gulp-sequence');
+var gulpRequireTasks = require('gulp-require-tasks');
+var minimist         = require('minimist');
+var config           = require('./config.json');
 
-const gulp = require("gulp"),
-      uglify = require("gulp-uglify"),
-      concat = require("gulp-concat"),
-      rimraf = require("rimraf"),
-      merge = require("merge-stream"),
-      async = require("async");
+var options          = minimist(process.argv.slice(2));
 
-// *** Dependency directories ***
-const dependencies = {
-    "bootstrap": {
-        "dist/**/*": "bootstrap/dist"
-    },
-    "chosen-js": {
-        "*": "chosen-js"
-    },
-    "@fortawesome/fontawesome-free": {
-        "css/all.min.css": "fontawesome-free/css",
-        "js/all.min.js": "fontawesome-free/js",
-        "webfonts/*": "fontawesome-free/webfonts"
-    },
-    "jquery": {
-        "dist/*": "jquery/dist"
-    },
-    "jquery-slimscroll": {
-        "jquery.slimscroll.min.js": "jquery-slimscroll"
-    },
-    "jquery-ui": {
-        "ui/**/*": "jquery-ui/ui",
-        "themes/base/**/*": "jquery-ui/themes/base"
-    },
-    "jquery-validation": {
-        "dist/**/*": "jquery-validation/dist"
-    },
-    "jquery-validation-unobtrusive": {
-        "dist/*": "jquery-validation-unobtrusive/dist"
-    },
-    "moment": {
-        "locale/*": "moment/locale",
-        "min/*": "moment/min"
-    },
-    "popper.js": {
-        "dist/**/*": "popper.js/dist"
-    }
-};
+// Global Variables
+global.config          = config;
 
-// *** Clean the 3rd party code directory ***
-function clean(cb) {
-    return rimraf("wwwroot/vendor/", cb);
-}
+gutil.log(gutil.colors.green('Starting Gulp!!'));
 
-// *** Minify the sites custom javascript ***
-// *** Move it to the lib/site directory ***
-function minify() {
-    const streams = [
-        gulp.src(["wwwroot/js/*.js"])
-        .pipe(uglify())
-        .pipe(concat("site.min.js"))
-        .pipe(gulp.dest("wwwroot/lib/site"))
-    ];
+// Invoke the module with options.
+gulpRequireTasks({
 
-    return merge(streams);
-}
+	// Specify path to your tasks directory.
+	path: process.cwd() + '/gulp-tasks' // This is default!
 
-//// *** Build the 3rd party / npm dependencies ***
-function scripts() {
-    const streams = [];
-    for (let dependency in dependencies) {
-        console.log(`Processing scripts for: ${dependency}`);
-        for (let directory in dependencies[dependency]) {
-            streams.push(gulp.src(`node_modules/${dependency}/${directory}`)
-                .pipe(gulp.dest(`wwwroot/vendor/${dependencies[dependency][directory]}`)));
-        }
-    }
-    return merge(streams);
-}
+	// Additionally pass any options to it from the table below.
+	// ...
+	// path	- './gulp-tasks'	Path to directory from which to load your tasks modules
+	// separator -	:	Task name separator, your tasks would be named, e.g. foo:bar:baz for ./tasks/foo/bar/baz.js
+	// arguments -	[]	Additional arguments to pass to your task function
+	// passGulp	- true	Whether to pass Gulp instance as a first argument to your task function
+	// passCallback -	true	Whether to pass task callback function as a last argument to your task function
+	// gulp	- require('gulp')	You could pass your existing Gulp instance if you have one, or it will be required automatically
 
-const build = gulp.series(clean, gulp.parallel(minify, scripts));
+});
 
-exports.clean = clean;
-exports.minify = minify;
-exports.scripts = scripts;
-exports.build = build;
+// Clean Task.
+gulp.task('dist-clean', ['clean:css', 'clean:js']);
+
+
+// Monitor changes.
+gulp.task('monitor', gulpSequence('sass:watch'));
+
+// JS Distribution Task.
+gulp.task('dist-js', gulpSequence('clean:js', 'copy:js', 'uglify:min', 'notify:js'));
+
+// SASS Compile Task.
+gulp.task('sass-compile', ['sass:main', 'sass:core', 'sass:pages', 'sass:plugins', 'sass:style']);
+
+gulp.task('sass-compile-rtl', ['sass:rtl']);
+
+// CSS Distribution Task.
+gulp.task('dist-css', gulpSequence('clean:css', 'sass-compile', 'autoprefixer:css', 'csscomb:css', 'cssmin:css', 'notify:css'));
+
+// RTL CSS Distribution Task.
+gulp.task('dist-css-rtl', gulpSequence('clean:css_rtl', 'sass-compile', 'sass-compile-rtl', 'rtlcss', 'autoprefixer:css_rtl', 'csscomb:css_rtl', 'cssmin:css_rtl', 'notify:css'));
+
+// Full Distribution Task.
+gulp.task('dist', ['dist-css', 'dist-js']);
+
+// Default Task.
+gulp.task('default', ['dist']);
