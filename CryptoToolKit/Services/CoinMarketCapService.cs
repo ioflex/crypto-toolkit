@@ -26,15 +26,21 @@ namespace CryptoToolKit.Services
         /// <param name="client"><see cref="HttpClient"/></param>
         public CoinMarketCapService(HttpClient client)
         {
-            // *** Coin Market Cap API base url ***
-            client.BaseAddress = new Uri("https://pro-api.coinmarketcap.com/v1/");
 
             client.DefaultRequestHeaders.Add("Accept", "application/json");
-            client.DefaultRequestHeaders.Add("X-CMC_PRO_API_KEY", "d409d0cd-4277-464b-8542-2fd3ed7bf7e6");
+            
 
             this.Client = client;
         }
 
+        /// <summary>
+        /// TODO: Method Documentation
+        /// TODO: Check HTTP Status code on response
+        /// </summary>
+        /// <param name="amount"></param>
+        /// <param name="symbol"></param>
+        /// <param name="toSymbols"></param>
+        /// <returns></returns>
         public async Task<object> ConvertPriceAsync(double amount, string symbol, string[] toSymbols)
         {
             var convert = string.Empty;
@@ -90,7 +96,7 @@ namespace CryptoToolKit.Services
 
         /// <summary>
         /// TODO: Method Documentation
-        /// TODO: Check response status for 200
+        /// TODO: Check HTTP Status code on response
         /// </summary>
         /// <param name="symbol"></param>
         /// <param name="fiat"></param>
@@ -120,7 +126,7 @@ namespace CryptoToolKit.Services
 
         /// <summary>
         /// TODO: Method Documentation
-        /// TODO: Check response status for 200
+        /// TODO: Check HTTP Status code on response
         /// </summary>
         /// <param name="start"></param>
         /// <param name="limit"></param>

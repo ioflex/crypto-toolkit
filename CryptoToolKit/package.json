@@ -1,37 +1,48 @@
 {
-  "name": "ioflex-cryptokit",
-  "version": "1.0.0",
-  "description": "A .net core web app containing tools for data analysis on crypto markets.",
-  "main": "index.js",
+  "name": "stack-admin-theme",
+  "version": "3.1.0",
+  "description": "Stack admin is super flexible, powerful, clean & modern responsive bootstrap 4 admin template with unlimited possibilities.",
+  "author": "PIXINVENT",
+  "repository": {
+    "type": "git",
+    "url": "git@bitbucket.org:geekslabs/stack-bootstrap-admin-theme.git"
+  },
+  "license": "Themeforest Standard Licenses",
+  "private": true,
+  "homepage": "https://pixinvent.com/bootstrap-admin-template/stack",
+  "main": "gulpfile.js",
+  "dependencies": {
+    "async": "^2.5.0",
+    "gulp-cli": "^2.0.1"
+  },
+  "devDependencies": {
+    "gulp": "^3.9.1",
+    "gulp-autoprefixer": "^6.0.0",
+    "gulp-clean": "^0.4.0",
+    "gulp-copy": "^4.0.1",
+    "gulp-csscomb": "^3.0.8",
+    "gulp-cssmin": "^0.2.0",
+    "gulp-ext-replace": "^0.3.0",
+    "gulp-html-beautify": "^1.0.1",
+    "gulp-imagemin": "^5.0.3",
+    "gulp-multistream": "^0.1.2",
+    "gulp-notify": "^3.0.0",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^4.0.1",
+    "gulp-rename": "^1.2.2",
+    "gulp-replace": "^1.0.0",
+    "gulp-require-tasks": "^1.2.1",
+    "gulp-rtlcss": "^1.0.0",
+    "gulp-sass": "^4.0.2",
+    "gulp-sequence": "^1.0.0",
+    "gulp-uglify": "^3.0.0",
+    "gulp-w3cjs": "^1.3.0",
+    "gulp-watch": "^5.0.1",
+    "merge-stream": "^1.0.1",
+    "minimist": "^1.2.0",
+    "pug": "^2.0.0-rc.4"
+  },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
-  },
-  "keywords": [
-    "crypto",
-    "crypto-currency",
-    "market",
-    "information",
-    "toolkit",
-    "tool",
-    "tools"
-  ],
-  "author": "Dalton Brady",
-  "license": "MIT",
-  "dependencies": {
-    "@fortawesome/fontawesome-free": "^5.9.0",
-    "bootstrap": "^4.3.1",
-    "chosen-js": "^1.8.7",
-    "gulp": "^3.9.1",
-    "gulp-concat": "^2.6.1",
-    "gulp-uglify": "^3.0.2",
-    "jquery": "^3.4.1",
-    "jquery-slimscroll": "^1.3.8",
-    "jquery-ui": "^1.12.1",
-    "jquery-validation": "^1.19.0",
-    "jquery-validation-unobtrusive": "^3.2.11",
-    "merge-stream": "^2.0.0",
-    "moment": "^2.24.0",
-    "popper.js": "^1.15.0",
-    "rimraf": "^2.6.3"
   }
 }

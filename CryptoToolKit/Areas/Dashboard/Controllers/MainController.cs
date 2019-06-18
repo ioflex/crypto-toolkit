@@ -25,7 +25,7 @@ namespace CryptoToolKit.Areas.Dashboard.Controllers
         /// Returns the Main.cshtml view
         /// </summary>
         /// <returns></returns>
-        public IActionResult Main()
+        public IActionResult Index()
         {
             return View();
         }
@@ -85,6 +85,26 @@ namespace CryptoToolKit.Areas.Dashboard.Controllers
             {
                 var ticker = await this.CoinMarketCapService.GetTickerAsync(symbol, fiat);
                 return OkJson(ticker);
+            }
+            catch (Exception e)
+            {
+                // TODO: Document Exception
+                return ServerExceptionJson(e);
+            }
+        }
+
+        /// <summary>
+        /// TODO: Controller Action Documentation
+        /// </summary>
+        /// <param name="category"></param>
+        /// <param name="keyword"></param>
+        /// <returns></returns>
+        public async Task<JsonResult> NewsFeed(string category, string keyword)
+        {
+            try
+            {
+                var newsFeed = await this.NewsApiService.GetNewsFeedAsync(category, keyword);
+                return OkJson(newsFeed);
             }
             catch (Exception e)
             {
